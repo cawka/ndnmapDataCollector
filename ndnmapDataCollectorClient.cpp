@@ -12,7 +12,7 @@
 #include <ndn-cxx/security/key-chain.hpp>
 #include <ndn-cxx/util/segment-fetcher.hpp>
 #include <ndn-cxx/security/validator-null.hpp>
-#include "nfdStatusCollector.hpp"
+#include "ndnmapDataCollector.hpp"
 
 
 #define APP_SUFFIX "/ndnmap/stats"

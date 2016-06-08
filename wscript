@@ -28,16 +28,16 @@ def configure(conf):
 def build(bld):
 
 
-    bld(target='nfdstat_s',
+    bld(target='ndnmapDataCollectorServer',
       features='cxx cxxprogram',
-      source='nfdStatusCollectorServer.cpp',
+      source='ndnmapDataCollectorServer.cpp',
       use='BOOST NDN_CXX LIBRT LIBRESOLV LEXPAT',
       lib='ndn-cxx boost_random',
       )
 
-    bld(target='nfdstat_c',
+    bld(target='ndnmapDataCollectorClient',
       features='cxx cxxprogram',
-      source='nfdStatusCollectorClient.cpp',
+      source='ndnmapDataCollectorClient.cpp',
       use='BOOST NDN_CXX LIBRT LIBRESOLV LEXPAT',
       lib='ndn-cxx boost_random',
       )

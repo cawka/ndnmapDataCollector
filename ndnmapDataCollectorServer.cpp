@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <list>
 #include <chrono>
-#include "nfdStatusCollector.hpp"
+#include "ndnmapDataCollector.hpp"
 #include <ndn-cxx/util/scheduler.hpp>
 #include <ndn-cxx/util/scheduler-scoped-event-id.hpp>
 #include <ndn-cxx/util/network-monitor.hpp>
