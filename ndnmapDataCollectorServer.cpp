@@ -268,7 +268,7 @@ main(int argc, char* argv[])
     {
       case 'f':
         file.open(optarg, std::fstream::in);
-        if (file == NULL)
+        if (!file)
         {
           std::cout << "cannot open file " << optarg << std::endl;
           ndnmapServer.usage();
