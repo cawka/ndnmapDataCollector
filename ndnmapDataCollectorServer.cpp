@@ -26,10 +26,10 @@ class NdnMapServer
 {
 public:
   NdnMapServer(char* programName)
-  : m_programName(programName)
-  , m_face(m_io)
+  : m_face(m_io)
   , m_scheduler(m_io)
   , m_terminationSignalSet(m_io)
+  , m_programName(programName)
   {
     m_mapServerAddr = "128.252.153.27";
     m_pollPeriod = 1;

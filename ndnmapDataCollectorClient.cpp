@@ -242,7 +242,7 @@ namespace ndn {
     std::string m_programName;
     std::string m_prefixFilter;
     std::unordered_set<std::string> m_remoteLinks;
-    int m_pollPeriod;
+    // int m_pollPeriod;
     Face m_face;
     KeyChain m_keyChain;
     

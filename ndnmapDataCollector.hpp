@@ -44,8 +44,7 @@ public:
   {
     size_t totalLength = 0;
     
-    totalLength += prependNonNegativeIntegerBlock(encoder,
-                                                  ndn::statusCollector::tlv::RX,
+    totalLength += prependNonNegativeIntegerBlock(encoder, ndn::statusCollector::tlv::RX,
                                                   m_rx);
     
     totalLength += prependNonNegativeIntegerBlock(encoder,
@@ -56,11 +55,11 @@ public:
                                                   ndn::statusCollector::tlv::FaceId,
                                                   m_faceId);
     
-    totalLength += prependByteArrayBlock(encoder, ndn::statusCollector::tlv::LinkIp,
-                                         reinterpret_cast<const uint8_t*>(m_linkIp.c_str()), m_linkIp.size());
+    totalLength += encoder.prependByteArrayBlock(ndn::statusCollector::tlv::LinkIp,
+                                                 reinterpret_cast<const uint8_t*>(m_linkIp.c_str()), m_linkIp.size());
     
-    totalLength += prependByteArrayBlock(encoder, ndn::statusCollector::tlv::CurrentTime,
-                                         reinterpret_cast<const uint8_t*>(m_timestamp.c_str()), m_timestamp.size());
+    totalLength += encoder.prependByteArrayBlock(ndn::statusCollector::tlv::CurrentTime,
+                                                 reinterpret_cast<const uint8_t*>(m_timestamp.c_str()), m_timestamp.size());
     
     
     totalLength += encoder.prependVarNumber(totalLength);
