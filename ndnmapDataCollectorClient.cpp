@@ -6,7 +6,7 @@
 
 #include <boost/asio.hpp>
 #include <ndn-cxx/face.hpp>
-#include <ndn-cxx/management/nfd-face-status.hpp>
+#include <ndn-cxx/mgmt/nfd/face-status.hpp>
 #include <ndn-cxx/encoding/buffer-stream.hpp>
 #include <unordered_set>
 #include <ndn-cxx/security/key-chain.hpp>
