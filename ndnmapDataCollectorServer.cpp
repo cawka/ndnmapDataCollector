@@ -70,7 +70,7 @@ public:
   }
 
   void
-  onData(const ndn::Interest& interest, ndn::Data& data, std::string linkPrefix)
+  onData(const ndn::Interest& interest, const ndn::Data& data, std::string linkPrefix)
   {
     std::cout << "Data received for: " << interest.getName() << std::endl;
     CollectorData reply;
@@ -172,6 +172,7 @@ public:
       
       m_face.expressInterest(i,
                              bind(&NdnMapServer::onData, this, _1, _2, it->first),
+                             bind(&NdnMapServer::onTimeout, this, _1), // nack
                              bind(&NdnMapServer::onTimeout, this, _1));
       
       //m_face.processEvents(ndn::time::milliseconds(m_timeoutPeriod));
