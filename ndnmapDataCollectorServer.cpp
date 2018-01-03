@@ -13,7 +13,7 @@
 #include "ndnmapDataCollector.hpp"
 #include <ndn-cxx/util/scheduler.hpp>
 #include <ndn-cxx/util/scheduler-scoped-event-id.hpp>
-#include <ndn-cxx/util/network-monitor.hpp>
+#include <ndn-cxx/net/network-monitor.hpp>
 #include <sys/wait.h>
 
 
@@ -35,7 +35,7 @@ public:
     m_pollPeriod = 1;
     m_timeoutPeriod = 500;
     
-    m_networkMonitor.reset(new util::NetworkMonitor(m_io));
+    m_networkMonitor.reset(new net::NetworkMonitor(m_io));
     
   }
   
@@ -244,7 +244,7 @@ private:
   boost::asio::io_service m_io;
   ndn::Face m_face;
   util::Scheduler m_scheduler;
-  unique_ptr<util::NetworkMonitor> m_networkMonitor;
+  unique_ptr<net::NetworkMonitor> m_networkMonitor;
   boost::asio::signal_set m_terminationSignalSet;
   
   std::string m_programName;

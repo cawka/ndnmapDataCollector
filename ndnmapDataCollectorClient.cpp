@@ -246,7 +246,7 @@ namespace ndn {
     Face m_face;
     KeyChain m_keyChain;
     
-    ndn::ValidatorNull m_validator;
+    security::ValidatorNull m_validator;
   };
 } // namespace ndn
 
