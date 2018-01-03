@@ -11,6 +11,7 @@
 #include <ndn-cxx/encoding/buffer-stream.hpp>
 #include <vector>
 #include <boost/lexical_cast.hpp>
+#include <iostream>
 
 namespace ndn {
 namespace statusCollector
@@ -38,9 +39,9 @@ public:
   {
     this->wireDecode(status);
   }
-  template<bool T>
+  template<encoding::Tag TAG>
   size_t
-  wireEncode(EncodingImpl<T>& encoder) const
+  wireEncode(EncodingImpl<TAG>& encoder) const
   {
     size_t totalLength = 0;
     
@@ -266,9 +267,9 @@ public:
     return m_statusList.size();
   }
   
-  template<bool T>
+  template<encoding::Tag TAG>
   size_t
-  wireEncode(EncodingImpl<T>& encoder) const
+  wireEncode(EncodingImpl<TAG>& encoder) const
   {
     size_t totalLength = 0;
     
