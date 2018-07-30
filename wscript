@@ -1,43 +1,36 @@
 # -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
-from waflib import Logs, Utils, Context
+
+from waflib import Logs, Utils
+import os
 
 def options(opt):
     opt.load(['compiler_cxx', 'gnu_dirs'])
-    opt.load(['boost', 'unix-socket', 'dependency-checker',
-              'default-compiler-flags', 'coverage' ],
+    opt.load(['default-compiler-flags', 'boost', 'dependency-checker'],
              tooldir=['.waf-tools'])
 
 def configure(conf):
     conf.load(['compiler_cxx', 'gnu_dirs',
-               'default-compiler-flags',
-               'boost'])
+               'default-compiler-flags', 'boost', 'dependency-checker'])
 
+    if 'PKG_CONFIG_PATH' not in os.environ:
+        os.environ['PKG_CONFIG_PATH'] = Utils.subst_vars('${LIBDIR}/pkgconfig', conf.env)
     conf.check_cfg(package='libndn-cxx', args=['--cflags', '--libs'],
                    uselib_store='NDN_CXX', mandatory=True)
 
     boost_libs = 'system'
-
     conf.check_boost(lib=boost_libs)
-    if conf.env.BOOST_VERSION_NUMBER < 104800:
-        Logs.error("Minimum required boost version is 1.48.0")
-        Logs.error("Please upgrade your distribution or install custom boost libraries" +
-                   " (http://redmine.named-data.net/projects/nfd/wiki/Boost_FAQ)")
-        return
+    if conf.env.BOOST_VERSION_NUMBER < 105800:
+        conf.fatal('Minimum required Boost version is 1.58.0\n'
+                   'Please upgrade your distribution or manually install a newer version of Boost'
+                   ' (https://redmine.named-data.net/projects/nfd/wiki/Boost_FAQ)')
 
+    conf.check_compiler_flags()
 
 def build(bld):
+    bld.program(target='ndnmapDataCollectorServer',
+                source='ndnmapDataCollectorServer.cpp',
+                use='NDN_CXX BOOST')
 
-
-    bld(target='ndnmapDataCollectorServer',
-      features='cxx cxxprogram',
-      source='ndnmapDataCollectorServer.cpp',
-      use='BOOST NDN_CXX LIBRT LIBRESOLV LEXPAT',
-      lib='ndn-cxx boost_random',
-      )
-
-    bld(target='ndnmapDataCollectorClient',
-      features='cxx cxxprogram',
-      source='ndnmapDataCollectorClient.cpp',
-      use='BOOST NDN_CXX LIBRT LIBRESOLV LEXPAT',
-      lib='ndn-cxx boost_random',
-      )
+    bld.program(target='ndnmapDataCollectorClient',
+                source='ndnmapDataCollectorClient.cpp',
+                use='NDN_CXX BOOST')
