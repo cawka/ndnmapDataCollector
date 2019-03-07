@@ -33,7 +33,8 @@ namespace statusCollector
 class FaceStatus
 {
 public:
-  FaceStatus(){};
+  FaceStatus() = default;
+
   explicit
   FaceStatus(const Block& status)
   {
