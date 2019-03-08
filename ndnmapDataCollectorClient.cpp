@@ -160,13 +160,12 @@ namespace ndn {
       shared_ptr<OBufferStream> buffer = make_shared<OBufferStream>();
       
       Interest interest("/localhost/nfd/faces/list");
-      interest.setChildSelector(0);
+      interest.setCanBePrefix(true);
       interest.setMustBeFresh(true);
       
-      SegmentFetcher::fetch(m_face, interest,
-                            m_validator,
-                            bind(&NdnMapClient::afterFetchedFaceStatusInformation, this, _1, remoteInterestName),
-                            bind(&NdnMapClient::onErrorFetch, this, _1, _2));
+      auto fetcher = SegmentFetcher::start(m_face, interest, m_validator);
+      fetcher->onComplete.connect(bind(&NdnMapClient::afterFetchedFaceStatusInformation, this, _1, remoteInterestName));
+      fetcher->onError.connect(bind(&NdnMapClient::onErrorFetch, this, _1, _2));
     }
 
     void
