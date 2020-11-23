@@ -12,7 +12,6 @@
 #include <chrono>
 #include "ndnmapDataCollector.hpp"
 #include <ndn-cxx/util/scheduler.hpp>
-#include <ndn-cxx/util/scheduler-scoped-event-id.hpp>
 #include <ndn-cxx/net/network-monitor.hpp>
 #include <sys/wait.h>
 
@@ -180,7 +179,7 @@ public:
         std::cout << "sent: " << name << std::endl;
     }
     // schedule the next fetch
-    m_scheduler.scheduleEvent(time::seconds(m_pollPeriod), bind(&NdnMapServer::sendInterests, this));
+    m_scheduler.schedule(time::seconds(m_pollPeriod), bind(&NdnMapServer::sendInterests, this));
   }
   void
   terminate(const boost::system::error_code& error, int signalNo)
@@ -195,7 +194,7 @@ public:
   void startScheduling()
   {
     // schedule the first event soon
-    m_scheduler.scheduleEvent(time::milliseconds(100), bind(&NdnMapServer::sendInterests, this));
+    m_scheduler.schedule(time::milliseconds(100), bind(&NdnMapServer::sendInterests, this));
   }
   void run()
   {
@@ -243,7 +242,7 @@ public:
 private:
   boost::asio::io_service m_io;
   ndn::Face m_face;
-  util::Scheduler m_scheduler;
+  Scheduler m_scheduler;
   unique_ptr<net::NetworkMonitor> m_networkMonitor;
   boost::asio::signal_set m_terminationSignalSet;
   
